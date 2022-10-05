@@ -28,7 +28,7 @@ INSERT INTO `groups` (`id`, `name`) VALUES
 (2, 'Unassigned');
 
 INSERT INTO `users` (`id`, `user`, `pass`, `email`, `firstname`, `lastname`, `lastseen`, `lastip`, `created`) VALUES
-(1, 'admin', '$2b$10$lTsC2XwlSKa0CRdUk5MFBeKKpypjnaaB2hBQaCDaXwoerGWY7Kz3.', 'admin@example.com', 'Admin', '', NOW(), '', NOW());
+(1, 'admin', '$2b$10$WbmZXKDEDTkPiU5vZQ.BJezADodRz.r1GmReurq/aPLx2wzm7D7f6', 'admin@example.com', 'Admin', '', NOW(), '', NOW());
 
 INSERT INTO `groupmembers` (`uid`, `gid`) VALUES
 (1, 1);

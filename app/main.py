@@ -13,7 +13,8 @@ from routes.page_routes import page_routes, navigation_bar
 from routes.internal_routes import internal_routes
 
 #Fix logging when using Nginx
-from werkzeug.contrib.fixers import ProxyFix
+# from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
 app.register_blueprint(page_routes)

@@ -1,0 +1,25 @@
+version: "3"
+services:
+  web:
+    build:
+      context: ./app
+    image: proxycontrol:latest
+    container_name: proxycontrol
+    ports:
+      - "7080:7080"
+    volumes:
+      - ./app:/app
+  db:
+    image: mariadb:latest
+    container_name: mariadb2
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: Password123!
+    volumes:
+      - ./db_data:/var/lib/mysql
+
+volumes:
+  db-data:
+    driver: "local"

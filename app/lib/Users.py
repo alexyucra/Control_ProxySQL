@@ -20,21 +20,25 @@ class Users:
 
 		password = form['password']
 		cur = self.db.query("SELECT pass,firstname,lastname, G.name FROM users LEFT JOIN groupmembers M ON M.uid = id LEFT JOIN groups G ON G.id = M.gid WHERE user = %s", [username])
+		if (cur):
+			for row in cur.fetchall():
+				pwbytes = password.encode('utf-8')
+				saltbytes = row[0].encode('utf-8')
+				if bcrypt.hashpw(pwbytes, saltbytes) == saltbytes:
+					session['username'] = form['username']
+					session['flname'] = row[1] + " " + row[2]
+					session['group'] = row[3]
+					session["notificationtype"] = "success"
+					session["notification"] = "Logged in"
+					return None
 
-		for row in cur.fetchall():
-			pwbytes = password.encode('utf-8')
-			saltbytes = row[0].encode('utf-8')
-			if bcrypt.hashpw(pwbytes, saltbytes) == saltbytes:
-				session['username'] = form['username']
-				session['flname'] = row[1] + " " + row[2]
-				session['group'] = row[3]
-				session["notificationtype"] = "success"
-				session["notification"] = "Logged in"
-				return None
-
-		session["notificationtype"] = "error"
-		session["notification"] = "Incorrect username or password"
-		return "Error: Incorrect username or password"
+			session["notificationtype"] = "error"
+			session["notification"] = "Incorrect username or password"
+			return "Error: Incorrect username or password"
+		else:
+			session["notificationtype"] = "warning"
+			session["notification"] = "Sistema indisponivel temporariamente, estamos trabalhando para resolve-lo"
+			return "Error: Sistema Indisponivel Temporariamente, verifique conexao com db"
 
 	def logoutUser(self):
 		session.pop('username', None)
